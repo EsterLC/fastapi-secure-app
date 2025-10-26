@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+# Tests/coverage
+htmlcov/
+.coverage
+# IDE
+.vscode/
+.idea/
+# Docker
+*.pid

@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_pass
+      POSTGRES_DB: app_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  api:
+    build: .             # usa Dockerfile en la raíz
+    environment:
+      APP_ENV: test
+      APP_PORT: 8000
+      JWT_SECRET: "CHANGE_IN_DEPLOY_TOOL"
+      JWT_ALG: HS256
+      ACCESS_TOKEN_MIN: 20
+      DATABASE_URL: "postgresql://app_user:app_pass@db:5432/app_db"
+    depends_on:
+      - db
+    ports:
+      - "8080:8000"      # host:container
+
+volumes:
+  dbdata:
